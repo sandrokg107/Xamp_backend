@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page { size: A4 landscape; margin: 1.2cm; }
+    body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11px; color: #000; }
+    table { border-collapse: collapse; width: 100%; }
+
+    .tabla-productos td, .tabla-productos th {
+      border: none !important; 
+      padding: 4px 2px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 8px;
+    }
+    .tabla-productos th { font-weight: bold; text-transform: uppercase; }
+    
+    .sin-borde td { 
+      border: none ; 
+    }
+    .titulo { font-size: 15px; font-weight: bold; text-transform: uppercase; text-align: center; padding: 10px 0; }
+
+    #tabla-codigo-cabecera { width: auto !important; white-space: nowrap; float: right !important; }
+    #tabla-codigo-cabecera td { border: 1px solid #000 !important; font-size: 11px; padding: 2px 8px; font-weight: bold; }
+
+    #tabla-aviso {
+      width: 50%;           /* Ocupa la mitad del ancho */
+      margin: auto;         /* Esto lo centra horizontalmente */
+      margin-top: 16px;     /* Espacio por arriba */
+      border-collapse: collapse;
+    }
+
+    #tabla-aviso td {
+      border: 1px solid #000; /* El borde negro del recuadro */
+      font-size: 11px;        /* Tamaño de letra legible */
+      text-align: center;     /* Texto centrado */
+      padding: 5px;           /* Un poco de aire dentro del cuadro */
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <table class="sin-borde">
+    <tr>
+      <td style="text-align: left; vertical-align: top;">
+        <img src="logo.jpg" style="width: 120px; height: auto;">
+      </td>
+      <td style="vertical-align: top;">
+        <table id="tabla-codigo-cabecera">
+          <tr>
+            <td>F/ALM-001</td>
+            <td>V1</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <div class="titulo">ACTA DE DESPACHO DE PRODUCTOS – COBEFAR S.A.C.</div>
+
+  <table class="sin-borde" style="margin-bottom: 15px;">
+    <tr>
+      <td style="text-align: left; width: 10%;"><strong>FECHA:</strong></td>
+      <td style="text-align: left; width: 40%;">{{ docdate }}</td>
+      <td style="text-align: right; width: 15%;"><strong>GUÍA N°:</strong></td>
+      <td style="text-align: left; width: 35%; padding-left: 10px;">{{ guia }}</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><strong>ORIGEN:</strong></td>
+      <td style="text-align: left;">{{ AlmOrigen }}</td>
+      <td style="text-align: right;"><strong>DESTINO:</strong></td>
+      <td style="text-align: left; padding-left: 10px;">{{ AlmDestino or '' }}</td>
+    </tr>
+  </table>
+
+  <table class="tabla-productos">
+    <thead>
+      <tr>
+        <th rowspan="2">CANTIDAD</th>
+        <th rowspan="2" style="width: 180px;">DESCRIPCION DEL PRODUCTO</th>
+        <th rowspan="2">LOTE/SERIE</th>
+        <th rowspan="2">FECHA VCTO</th>
+        <th rowspan="2">Nro R.S.</th>
+        <th colspan="2">PROTOCOLO ANALISIS</th>
+        <th colspan="2">CAJAS LIMPIAS</th>
+        <th colspan="2">EMBALAJE CERRADO</th>
+        <th colspan="2">CONSIGNA EMBALAJE</th>
+        <th rowspan="2">CONDICIÓN ALMACEN.</th>
+        <th colspan="2">MANCHADO / DERRAME</th>
+        <th colspan="2">CORRESPONDE DOC.</th>
+        <th colspan="2">VEHÍCULO ADECUADO</th>
+      </tr>
+      <tr style="font-size: 7px;">
+        <th>SI</th><th>NO</th><th>SI</th><th>NO</th><th>SI</th><th>NO</th><th>SI</th><th>NO</th><th>SI</th><th>NO</th><th>SI</th><th>NO</th><th>SI</th><th>NO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in productos %}
+      <tr>
+        <td>{{ item.cantidad|int }}</td>
+        <td style="text-align: left;">{{ item.descripcion }}</td>
+        <td>{{ item.lote }}</td>
+        <td>{{ item.vencimiento }}</td>
+        <td>{{ item.rs }}</td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+        <td>{{ item.condicion }}</td>
+        <td></td><td><img src="check.png" style="width: 10px;"></td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+        <td><img src="check.png" style="width: 10px;"></td><td></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+ <table class="sin-borde">
+    <tr>
+      <td colspan="20" style="text-align:left;"><strong>OBSERVACIONES:</strong> NINGUNA</td>
+    </tr>
+    <tr>
+      <td colspan="20">
+        <table style="width: 100%; border: none; border-spacing: 0;">
+          <tr>
+            <td style="width: 48%; text-align: center; vertical-align: bottom;">
+              <div style="height: 90px; line-height: 90px; text-align: center; overflow: hidden;">
+                <img src="Firmas/{{ firma }}" 
+                    style="max-height: 85px; max-width: 180px; vertical-align: middle; display: inline-block;">
+              </div>
+              <div style="width: 220px; margin: 0 auto; border-top: 1px solid #000; padding-top: 5px;">
+                <div style="font-size: 10px; font-weight: bold;">RESPONSABLE DE ALMACÉN:</div>
+                <div style="font-size: 8px;">(sello y firma)</div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    
+    <tr>
+      <td colspan="20" style="padding:0; border:none;">
+        <table id="tabla-aviso">
+          <tr>
+            <td>
+              Prohibido reproducir sin autorización de DROGUERÍA COBEFAR
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

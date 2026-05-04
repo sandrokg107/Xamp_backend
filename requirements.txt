@@ -1,0 +1,9 @@
+python-dotenv
+pyodbc
+jinja2
+weasyprint
+fastapi
+pydantic
+uvicorn[standard]
+tqdm
+dotenv

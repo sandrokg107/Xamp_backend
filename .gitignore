@@ -1,0 +1,13 @@
+# .gitignore
+.env
+ActaDespacho_traslado/
+ActaDespacho/
+ActaOrganoleptico/
+ActaRecepcion/
+ActaDespacho_ventas/
+**/__pycache__/
+env/
+logs/
+*.log
+Logs/
+Temp_Downloads/

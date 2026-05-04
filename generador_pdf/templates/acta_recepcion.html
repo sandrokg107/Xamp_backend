@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acta de Recepción de Productos</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 1.2cm;
+        }
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            font-size: 11.5px;
+            color: #000;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 7px;
+        }
+        td, th {
+          border: none;
+          padding: 2px;
+          text-align: center;
+          font-family: 'Calibri', 'Arial', sans-serif;
+          font-size: 7px;
+        }
+        .sin-borde td {
+            border: none;
+        }
+        .titulo {
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Calibri', 'Arial', sans-serif;
+        }
+        #tabla-aviso {
+          width: 50%;           /* Ocupa la mitad del ancho */
+          margin: auto;         /* Esto lo centra horizontalmente */
+          margin-top: 16px;     /* Espacio por arriba */
+          border-collapse: collapse;
+        }
+
+        #tabla-aviso td {
+          border: 1px solid #000; /* El borde negro del recuadro */
+          font-size: 11px;        /* Tamaño de letra legible */
+          text-align: center;     /* Texto centrado */
+          padding: 5px;           /* Un poco de aire dentro del cuadro */
+          color: #000;
+        }
+        #tabla-codigo-cabecera {
+          width: 1px !important;    /* Forzamos el mínimo para que no se estire */
+          white-space: nowrap;      /* El contenido definirá el ancho real */
+          float: right !important;  /* Pegado al costado derecho */
+          border-collapse: collapse;
+        }
+        #tabla-codigo-cabecera td {
+          border: 1px solid #000 !important;
+          font-size: 11px;
+          padding: 2px 6px;
+          font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <table style="width: 100%; border: none;">
+        <tr>
+            <td style="text-align: left; vertical-align: top;">
+                <img src="logo.jpg" style="width: 120px; height: auto;">
+            </td>
+            <td style="text-align: right; vertical-align: top;">
+                <table id="tabla-codigo-cabecera" align="right">
+                    <tr>
+                        <td>F/ALM-002</td>
+                        <td>V1</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%; border: none; margin: 10px 0;">
+        <tr>
+            <td class="titulo" style="text-align: center; font-size: 15px;">
+                <strong>ACTA DE RECEPCION DE PRODUCTOS - COBEFAR S.A.C.</strong>
+            </td>
+        </tr>
+    </table>
+
+    <table style="width: 100%; border: none;">
+        <tr>
+            <td style="width: 1%; white-space: nowrap; text-align: left; font-size: 12px; font-weight: bold;">FECHA :</td>
+            <td style="text-align: left; font-size: 12px; padding-left: 10px;">{{ docdate }}</td>
+
+            <td style="text-align: right; font-size: 12px; font-weight: bold;">GUÍA N° :</td>
+            <td style="width: 1%; white-space: nowrap; text-align: right; font-size: 12px; padding-left: 10px;">{{ guia }}</td>
+        </tr>
+
+        <tr>
+            <td style="width: 1%; white-space: nowrap; text-align: left; font-size: 12px; font-weight: bold;">PROCEDENCIA :</td>
+            <td colspan="3" style="text-align: left; font-size: 12px; padding-left: 10px;">{{ AlmOrigen }}</td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Cantidad<br>Programada</th>
+                <th rowspan="2">Cantidad<br>Recibida</th>
+                <th rowspan="2">DESCRIPCION DEL PRODUCTO</th>
+                <th rowspan="2">FABRICANTE</th>
+                <th rowspan="2">LOTE<br>SERIE</th>
+                <th rowspan="2">FECHA<br>VCTO</th>
+                <th rowspan="2">Nro R.S.</th>
+
+                <th colspan="2">PROTOCOLO<br>DE<br>ANALISIS</th>
+                <th colspan="2">CAJAS<br>LIMPIAS</th>
+                <th colspan="2">EMBALAJE<br>CERRADO</th>
+                <th colspan="2">CONSIGNA<br>CONDICIÓN<br>DE<br>EMBALAJE</th>
+                <th rowspan="2">CONDICIÓN<br>ALMACENAMIENTO</th>
+                <th colspan="2">MANCHADO<br>DERRAME<br>ARRUGADO<br>QUEBRADO<br>HUMEDO</th>
+                <th colspan="2">PRODUCTO<br>CORRESPONDE<br>AL DOCUMENTO</th>
+                <th colspan="2">VEHÍCULO<br>LIMPIO Y<br>EQUIPADO<br>CONDICIÓN<br>ADECUADA</th>
+            </tr>
+
+            <tr>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+                <th>SI</th><th>NO</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in productos %}
+            <tr>
+                <td>{{ item.cantidad|int or '' }}</td>
+                <td>{{ item.cantidad|int or '' }}</td>
+                <td style="text-align: left;">{{ item.descripcion or '' }}</td>
+                <td style="text-align: left;">{{ item.fabricante or '' }}</td>
+                <td>{{ item.lote or '' }}</td>
+                <td>{{ item.fechvencimiento or '' }}</td>
+                <td>{{ item.rs or '' }}</td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+
+                <td>{{ item.condicion or '' }}</td>
+
+                <td></td>
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+
+                <td><img src="check.png" style="width: 12px; height: 12px; display: block; margin: auto;"></td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            <td colspan="20" style="text-align:left;">
+                <strong>OBSERVACIONES:</strong> NINGUNA
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="22" class="firma">
+                <table style="margin:auto; width:60%;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <img src="Firmas/{{ firma }}" style="width: 150px; display: block; margin: auto;"><br>
+                            -------------------------------------------------<br>
+                            RESPONSABLE DE ALMACÉN<br>
+                            (sello y firma)
+                        </td>
+
+                        <td></td>
+
+                        <td style="text-align:center;">
+                            <img src="Firmas/{{ firma }}" style="width: 150px; display: block; margin: auto;"><br>
+                            -------------------------------------------------<br>
+                            PERSONA QUE ENTREGA<br>
+                            (sello y firma)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="20" style="padding:0; border:none;">
+                <table id="tabla-aviso">
+                    <tr>
+                        <td>Prohibido reproducir sin autorización de DROGUERÍA COBEFAR</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
